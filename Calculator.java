@@ -21,6 +21,7 @@ public class Calculator extends JFrame {
 
         setupUI();
     }
+
     private void setupUI() {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(5, 4));
@@ -44,5 +45,27 @@ public class Calculator extends JFrame {
         }
 
         add(panel);
+
+    private class ButtonClickListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            JButton source = (JButton) e.getSource();
+            String buttonText = source.getText();
+
+            if (buttonText.matches("[0-9]")) {
+                handleDigitClick(buttonText);
+            } else if (buttonText.equals(".")) {
+                handleDecimalClick();
+            } else if (buttonText.equals("=")) {
+                handleEqualClick();
+            } else if (buttonText.equals("AC")) {
+                handleAllClearClick();
+            } else if (buttonText.equals("+/-")) {
+                handleChangeSignClick();
+            } else if (buttonText.equals("C")) {
+                handleClearClick();
+            } else {
+                handleOperationClick(buttonText);
+            }
+        }
     }
 }
