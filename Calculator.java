@@ -10,5 +10,15 @@ public class Calculator extends JFrame {
     private String lastOperation;
     private double result;
 
+    public Calculator() {
+        setTitle("Calculator");
+        setSize(300, 400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        currentInput = new StringBuilder();
+        lastOperation = "";
+        result = 0;
+
+        setupUI();
+    }
 }
