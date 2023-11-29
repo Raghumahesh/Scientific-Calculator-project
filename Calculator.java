@@ -141,4 +141,29 @@ public class Calculator extends JFrame {
             lastOperation = "";
         }
     }
+
+    private void handleOperationClick(String operation) {
+        if (currentInput.length() > 0) {
+            handleEqualClick();
+            lastOperation = operation;
+        }
+    }
+
+    private void handleClearClick() {
+        if (currentInput.length() > 0) {
+            currentInput.deleteCharAt(currentInput.length() - 1);
+            display.setText(currentInput.toString());
+        } else if (!lastOperation.isEmpty()) {
+            currentInput = new StringBuilder(String.valueOf(result));
+            lastOperation = "";
+            display.setText(currentInput.toString());
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            Calculator calculator = new Calculator();
+            calculator.setVisible(true);
+        });
+    }
 }
