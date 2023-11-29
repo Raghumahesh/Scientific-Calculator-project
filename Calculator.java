@@ -65,11 +65,23 @@ public class Calculator extends JFrame {
         }
     }
 
-    private void handleDecimalClick() {
-        if (!currentInput.toString().contains(".")) {
-            currentInput.append(".");
+        private void handleChangeSignClick() {
+        if (currentInput.length() > 0 && !currentInput.toString().equals("0")) {
+            if (currentInput.charAt(0) == '-') {
+                currentInput.deleteCharAt(0);
+            } else {
+                currentInput.insert(0, '-');
+            }
             display.setText(currentInput.toString());
         }
-    }  
+    }
+
+    private void handleAllClearClick() {
+        currentInput = new StringBuilder();
+        lastOperation = "";
+        result = 0;
+        display.setText("0");
+    }
+
 
 }
