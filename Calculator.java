@@ -58,4 +58,18 @@ public class Calculator extends JFrame {
 
     }
 
+       private void handleDigitClick(String digit) {
+        if (currentInput.length() < 8) {
+            currentInput.append(digit);
+            display.setText(currentInput.toString());
+        }
+    }
+
+    private void handleDecimalClick() {
+        if (!currentInput.toString().contains(".")) {
+            currentInput.append(".");
+            display.setText(currentInput.toString());
+        }
+    }  
+
 }
