@@ -52,10 +52,4 @@ public class Calculator extends JFrame {
         }
     }
 
-    private void handleDecimalClick() {
-        if (!currentInput.toString().contains(".")) {
-            currentInput.append(".");
-            display.setText(currentInput.toString());
-        }
-    }
 }
