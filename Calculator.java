@@ -26,13 +26,26 @@ public class Calculator extends JFrame {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(5, 4));
 
-     private void handleDigitClick(String digit) {
-        if (currentInput.length() < 8) {
-            currentInput.append(digit);
-            display.setText(currentInput.toString());
+        display = new JTextField();
+        display.setEditable(false);
+        panel.add(display);
+
+        String[] buttonLabels = {
+                "7", "8", "9", "/",
+                "4", "5", "6", "*",
+                "1", "2", "3", "-",
+                "0", ".", "=", "+",
+                "AC", "+/-", "C"
+        };
+
+        for (String label : buttonLabels) {
+            JButton button = new JButton(label);
+            button.addActionListener(new ButtonClickListener());
+            panel.add(button);
         }
 
         add(panel);
+    }
 
     private class ButtonClickListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
@@ -55,7 +68,13 @@ public class Calculator extends JFrame {
                 handleOperationClick(buttonText);
             }
         }
+    }
 
+    private void handleDigitClick(String digit) {
+        if (currentInput.length() < 8) {
+            currentInput.append(digit);
+            display.setText(currentInput.toString());
+        }
     }
 
     private void handleDecimalClick() {
@@ -65,14 +84,7 @@ public class Calculator extends JFrame {
         }
     }
 
-       private void handleDigitClick(String digit) {
-        if (currentInput.length() < 8) {
-            currentInput.append(digit);
-            display.setText(currentInput.toString());
-        }
-    }
-
-        private void handleChangeSignClick() {
+    private void handleChangeSignClick() {
         if (currentInput.length() > 0 && !currentInput.toString().equals("0")) {
             if (currentInput.charAt(0) == '-') {
                 currentInput.deleteCharAt(0);
@@ -83,6 +95,50 @@ public class Calculator extends JFrame {
         }
     }
 
+    private void handleAllClearClick() {
+        currentInput = new StringBuilder();
+        lastOperation = "";
+        result = 0;
+        display.setText("0");
+    }
 
+    private void handleEqualClick() {
+        try {
+            double currentNumber = Double.parseDouble(currentInput.toString());
+            switch (lastOperation) {
+                case "+":
+                    result += currentNumber;
+                    break;
+                case "-":
+                    result -= currentNumber;
+                    break;
+                case "*":
+                    result *= currentNumber;
+                    break;
+                case "/":
+                    if (currentNumber == 0) {
+                        display.setText("ERR");
+                        return;
+                    }
+                    result /= currentNumber;
+                    break;
+                default:
+                    result = currentNumber;
+            }
 
+            if (Double.isInfinite(result) || Double.isNaN(result) || String.valueOf(result).length() > 8) {
+                display.setText("ERR");
+                result = 0;
+            } else {
+                display.setText(String.valueOf(result));
+            }
+
+            currentInput = new StringBuilder();
+            lastOperation = "";
+        } catch (NumberFormatException ex) {
+            display.setText("ERR");
+            currentInput = new StringBuilder();
+            lastOperation = "";
+        }
+    }
 }
