@@ -58,6 +58,13 @@ public class Calculator extends JFrame {
 
     }
 
+    private void handleDecimalClick() {
+        if (!currentInput.toString().contains(".")) {
+            currentInput.append(".");
+            display.setText(currentInput.toString());
+        }
+    }
+
        private void handleDigitClick(String digit) {
         if (currentInput.length() < 8) {
             currentInput.append(digit);
@@ -76,12 +83,6 @@ public class Calculator extends JFrame {
         }
     }
 
-    private void handleAllClearClick() {
-        currentInput = new StringBuilder();
-        lastOperation = "";
-        result = 0;
-        display.setText("0");
-    }
 
 
 }
